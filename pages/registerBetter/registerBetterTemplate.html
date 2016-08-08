@@ -1,0 +1,78 @@
+<script>
+	require(['jquery','jqueryui','bootstrap','jquery_validate','md5', 'store','wb_translate','xml2json','am_service'], function($){  
+		$(function(){				 
+			renderTranslations();	
+			
+			$("#betterMeldenTable").undelegate("form").delegate("form",'submit', function(e){	
+			//$("#betterMeldenTable").on('submit', 'form', function (e) {
+			//$("form").submit(function(e) {
+					//e.preventDefault();
+					 e.preventDefault();
+ 					// e.stopPropagation();
+					}).validate({
+						 rules: {
+							"returnToWorkDate": {
+								required: true, 
+								},
+							"comment":{required: true,},
+						},
+						 messages: {
+							"returnToWorkDate":{
+								required:"is een verplicht veld", 
+								},
+							"comment":{
+								required: "is een verplicht veld"
+								}						
+						},				
+						highlight: function (element) {
+							$(element).closest('.control-group')
+								.removeClass('success').addClass('error');
+						},
+						success: function (element) {
+							element.addClass('valid').closest('.control-group')
+								.removeClass('error').addClass('success');
+						},
+						submitHandler: function (form) {	
+						   // e.preventDefault();
+ 					       // e.stopPropagation();					
+							var sOrg = decodeURIComponent(escape(window.atob( store.get("session_Org_am_emp")))),
+								sUser = decodeURIComponent(escape(window.atob( store.get("session_User_am_emp")))),
+								sPass = decodeURIComponent(escape(window.atob( store.get("session_Pass_am_emp"))));						  					
+								
+								absService.insertBetterRecord(sOrg,sUser, sPass, $('#empID').val(), $('#returnToWorkDate').val(), $('#comment').val());
+							
+							return false;
+						}
+						
+				});
+			  
+		
+		});//ready	
+	});//require
+</script>
+<!-- Modal HTML -->
+<form id="betterMeldenTable" style="text-align: justify;">
+<div id="loading_response"><!-- spanner --></div>
+
+              <input type="hidden" name="empID" id="empID" value=""/>
+              <div class="form-group row">
+                <label for="returnToWorkDate" class="col-sm-5 form-control-label translatable">sick_info_returntowork_date</label>
+                <div class="col-xs-5">
+                  <input name="returnToWorkDate" type="date" id="returnToWorkDate" class="form-control form-control-xs"  data-msg="is een ongeldig datum formaat" />                     
+                </div>
+              </div>                  
+              <div class="form-group row">
+                <label for="comment" class="col-sm-5 form-control-label translatable">msg_title_comment</label>
+                <div class="col-xs-5">
+                    <textarea name="comment" id="comment" cols="50" rows="5" class="form-control form-control-xs" data-msg="is een verplicht veld"></textarea>                                         
+                </div>
+              </div>       
+            </div>
+            <div class="modal-footer">
+                 <button type="button" class="btn btn-default translatable" data-dismiss="modal">form_action_cancel</button>
+                <button type="submit" class="btn btn-primary translatable" id="actRegisterBetter">form_action_send</button>
+            </div>           
+
+</form>
+
+

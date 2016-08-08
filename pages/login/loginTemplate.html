@@ -1,0 +1,59 @@
+
+    <div id="loginlogo">&nbsp;</div> 
+    <center><div id="login_response"><!-- spanner --></div> </center>
+    <div id="loginform">    
+        <form id="login-form" name="form1" method="">
+             <div class="form-group">           
+                <input name="service" type="text" id="amsservice" class="form-control glowing-border" placeholder="amsservice" style="display:none"/>
+            </div>   <!-- -->
+            <div class="form-group">            
+                <input name="companycode" type="text" id="companycode" class="form-control glowing-border" placeholder="companycode" required/>
+            </div>  
+            <div class="form-group">            
+                <input name="username" type="text" id="username" class="form-control glowing-border" placeholder="username" required/>
+            </div> 
+            <div class="form-group">            
+                <input name="password" type="password" id="password" class="form-control glowing-border" placeholder="password" autocomplete="off" required/>
+            </div>  
+            
+             <div class="form-group">                
+                    <span class="update-container">                            
+                        <span class="onoffswitch">
+                            <input type="checkbox" name="remember_password" class="onoffswitch-checkbox" id="remember_password">
+                            <label class="onoffswitch-label" for="remember_password"> 
+                            <span class="onoffswitch-inner" data-swchon-text="Ja" data-swchoff-text="Nee"></span> 
+                            <span class="onoffswitch-switch"></span> 
+                            </label> 
+                        </span>  
+                    </span> 
+                  <span for="remember_password" style="color:#fff; font-size:12px" class="translatable">form_remember_password</span>                    
+            </div>
+         
+           <div class="form-group">             
+                <button type="submit" id="submitbtn" name="submitbtn" class="btn btn-primary btn-block">
+                <span class="sTranslate" key="_login_button_">login</span> &nbsp;  &nbsp;<i class="fa fa-key"></i>
+                </button>                
+           </div>                    
+        </form>
+    
+        <p id="msgIncorrectCred" style="display: none;" title="Incorrect credential" class="translatable">msgIncorrectCred</p>    
+         <!--<p><a id="msgPWordForgoten" class="translatable">msgPWordForgoten</a></p>    
+       <div id="wwvergeten" style="display:none;">
+            <p id="msgPWordRecovery" class="translatable">msgPWordRecovery</p>
+            <p><a href="index.html" id="msgGotoLoginPage" class="translatable">msgGotoLoginPage</a></p>
+        </div>-->
+        
+       <!-- <a id="loginbutton"><img src="images/loginbutton.png"/></a>-->
+        <a id="advancedsettings"><img src="images/settings.png"/></a>    
+    </div>
+    
+    <div id="loginpoweredby">&nbsp;</div>
+    
+    <div id="download-links">
+        <a id="android-download" onclick="wbHelper.openExternalLocation('http://play.google.com/store/apps/details?id=nl.workbee.am_mobile')"><img src="images/android-download.png"/></a>
+        <a href="javascript:alert('Coming soon')"><img src="images/apple-download.png"/></a>
+    </div>
+    
+    <div id="version">
+    	<span style="">Powerd by Workbee 2.0.1</span>
+    </div>

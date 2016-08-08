@@ -1,0 +1,208 @@
+
+<script>
+require(['jquery','jqueryui','bootstrap','jquery_validate','md5', 'store','wb_translate','xml2json','am_service'], function($){  
+		$(function(){			
+			// Handles addressInfo
+			$("#changeAddress").on('change', function() { //  alert( this.value ); // or $(this).val()
+				var value = $('#changeAddress option:selected').val();
+				if (value == "true") {
+					$(".addressInfo").show();
+				} else {
+					$(".addressInfo").hide();
+				}
+			});		
+					 
+			renderTranslations();	
+			$("#ziekMeldenTable").on('submit', 'form', function (e) {
+			  // $("#ziekMeldenTable").submit(function(e) {
+					 e.preventDefault();
+ 					 //e.stopPropagation();
+				}).validate({	
+			        rules: {
+						"illnessStartdate": {
+							required: true, 
+							date: true},
+						"comment":{required: true,},
+					},
+					 messages: {
+						"illnessStartdate":{
+							required:"is een verplicht veld", 
+							date:"is een ongeldig datum formaat"},
+						"comment":{
+							required: "is een verplicht veld"
+							}						
+					},
+					highlight: function (element) {
+						$(element).closest('.control-group')
+							.removeClass('success').addClass('error');
+					},
+					success: function (element) {
+						element.addClass('valid').closest('.control-group')
+							.removeClass('error').addClass('success');
+					},
+					submitHandler: function (form) {
+					// evt.stopImmediatePropagation(); 		
+				       var sOrg = decodeURIComponent(escape(window.atob( store.get("session_Org_am_emp")))),
+						  sUser = decodeURIComponent(escape(window.atob( store.get("session_User_am_emp")))),
+						  sPass = decodeURIComponent(escape(window.atob( store.get("session_Pass_am_emp"))));						  					
+						  absService.insertSickRecord(sOrg,sUser,sPass);		
+					 return false;
+					}
+				});
+		
+		});//ready	
+	});//require
+</script>
+
+<!-- Modal HTML --> 
+<form id="ziekMeldenTable" data-async data-target="#sickModal">
+<div id="loading_response"><!-- spanner --></div>       
+<div id="sickModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">          
+       		<div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <h4 class="modal-title translatable">sick_info_report_sick</h4>
+            </div>
+            <div class="modal-body box-table-c">
+                        
+                 <input type="hidden" name="employeeId" id="employeeId" value=""/>
+                 <input type="hidden" name="employeeCode" id="employeeCode" value=""/>               
+                  <div class="form-group row">
+                    <label for="illnessStartdate" class="col-sm-5 form-control-label translatable">sick_info_firstdaylost</label>
+                    <div class="col-xs-5">
+                      <input name="illnessStartdate" type="date" id="illnessStartdate" class="form-control form-control-xs required" />                    
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="sickStatus" class="col-sm-5 form-control-label translatable">sick_info_ao</label>
+                    <div class="col-xs-5">
+                      <input type="range" name="sickStatus" id="sickStatus" value="100" min="0" max="100" data-highlight="true"  class="" oninput="sickStatusOut.value = sickStatus.value"/> 
+                    </div>
+                     <div class="col-xs-1">
+                       <output name="sickStatusName" id="sickStatusOut">100</output>
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row">
+                    <label for="responsible3rd" class="col-sm-5 form-control-label translatable">sick_info_isthirdparty_liability</label>
+                    <div class="col-xs-5">
+                      <select name="responsible3rd" id="responsible3rd" class="form-control form-control-xs">
+                            <option value="false" class="translatable">Nee</option>
+                            <option value="true" class="translatable">Ja</option>
+                        </select>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="vangnet" class="col-sm-5 form-control-label translatable">sick_info_vangnet</label>
+                    <div class="col-xs-5">
+                      <select name="vangnet" id="vangnet" class="form-control form-control-xs">
+                            <option value="false" class="translatable" selected>Nee</option>
+                            <option value="true" class="translatable">Ja</option>
+                        </select>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="comment" class="col-sm-5 form-control-label translatable">msg_title_comment</label>
+                    <div class="col-xs-5">
+                      <textarea name="comment" rows="3" class="form-control form-control-xs required" id="comment"></textarea>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="companyAccident" class="col-sm-5 form-control-label translatable">sick_info_industrialaccidentcase</label>
+                    <div class="col-xs-5">
+                      <select name="companyAccident" id="companyAccident" class="form-control  col-sm-5 form-control-label translatable">
+                        <option value="false" class="translatable">Nee</option>
+                        <option value="true" class="translatable">Ja</option>
+                    </select>
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group row">
+                    <label for="twijfelAo" class="col-sm-5 form-control-label translatable">sink_info_twijfelao</label>
+                    <div class="col-xs-5">
+                      <select name="twijfelAo" id="twijfelAo" class="form-control  col-sm-5 form-control-label translatable">
+                            <option value="false" class="translatable">Nee</option>
+                            <option value="true" class="translatable">Ja</option>
+                        </select>
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row">
+                    <label for="changeAddress" class="col-sm-5 form-control-label translatable">sick_info_diffrent_address</label>
+                    <div class="col-xs-5">
+                      <select name="changeAddress" id="changeAddress" class="form-control  col-sm-5 form-control-label translatable">
+                            <option value="false" class="translatable">Nee</option>
+                            <option value="true" class="translatable">Ja</option>
+                        </select>
+                    </div>
+                  </div>
+                  
+                  
+                   <div class="form-group row addressInfo" style="display:none">
+                    <label for="street2" class="col-sm-5 form-control-label translatable">address_info_street</label>
+                    <div class="col-xs-5">
+                      <input type="text" name="street2" id="street2" class="form-control form-control-xs">                                       
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row addressInfo" style="display:none">
+                    <label for="housenr" class="col-sm-5 form-control-label translatable">address_info_housenr</label>
+                    <div class="col-xs-5">
+                      <input type="text" name="housenr" id="housenr" class="form-control form-control-xs">                                       
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row addressInfo" style="display:none">
+                    <label for="zipcode" class="col-sm-5 form-control-label translatable">address_info_postcode</label>
+                    <div class="col-xs-5">
+                      <input type="text" name="zipcode" id="zipcode" class="form-control form-control-xs">                                       
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row addressInfo" style="display:none">
+                    <label for="city" class="col-sm-5 form-control-label translatable">address_info_city</label>
+                    <div class="col-xs-5">
+                      <input type="text" name="city" id="city" class="form-control form-control-xs">                                       
+                    </div>
+                  </div>
+                  
+                   <div class="form-group row addressInfo" style="display:none">
+                    <label for="country" class="col-sm-5 form-control-label translatable">address_info_country</label>
+                    <div class="col-xs-5">
+                        <select name="country" id="country" class="form-control form-control-xs"> 
+                        <option value="NL" selected>Nederland</option>
+                        <option value="BE">België</option>
+                        <option value="DE">Duitsland</option>
+                        <option value="GB">Engeland</option>
+                        <option value="FR">Frankrijk</option>
+                        <option value="HO">Hongarije</option>
+                        <option value="ID">Indonesië</option>
+                        <option value="IN">India</option>
+                        <option value="IT">Italië</option>
+                        <option value="LU">Luxemburg</option>
+                        <option value="PO">Polen</option>
+                        <option value="TR">Turkije</option>
+                        <option value="AT">Oostenrijk</option>
+                        <option value="ES">Spanje</option>
+                        <option value="--">Overige</option>
+                        </select>                                      
+                    </div>
+                  </div>         
+               
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default translatable" data-dismiss="modal">form_action_cancel</button>
+                <button type="submit" class="btn btn-primary translatable" id="actRegisterSick">form_action_send</button>
+            </div>
+                                
+        </div>
+    </div>
+</div>
+</form>
+

@@ -1,0 +1,70 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brands" href="#">
+      <div id="logo">&nbsp;</div></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">     
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+         <li class="<% if (model.routes.dashboard.active) { %> active<% } %>"><a href="#/dashboard" class="translatable">heder_dashboard</a></li> 
+         <li class="dropdown <% if (model.routes.actionMonitor.active) { %> active<% } %>  <% if (model.routes.sickHistory.active) { %> active<% } %> <% if (model.routes.documents.active) { %> active<% } %>">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="translatable">menu_info</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu">           
+              <li><a href="#/actionMonitor" class="translatable">heder_actionMonitor</a></li>
+              <li><a href="#" class="translatable"></span> Afdelingshistorie </a></li>
+              
+             <!-- <li><a href="#/sickHistory" class="translatable">heder_sickHistory</a></li>
+              <li role="separator" class="divider"></li>            
+              <li><a href="#/documents" class="translatable">heder_documents</a></li>   -->       
+            </ul>
+        </li>        
+        <!--<li class="dropdown <% if (model.routes.registerSick.active) { %> active<% } %>  <% if (model.routes.registerBetter.active) { %> active<% } %> <% if (model.routes.registerPregnancy.active) { %> active<% } %> <% if (model.routes.meetingRequest.active) { %> active<% } %> <% if (model.routes.makeDeclaration.active) { %> active<% } %>">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="translatable">menu_action</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#/registerSick" class="translatable">heder_registerSick</a></li>
+              <li><a href="#/registerBetter" class="translatable">heder_registerBetter</a></li>
+              <li><a href="#/registerPregnancy" class="translatable">heder_registerPregnancy</a></li>         
+              <li><a href="#/meetingRequest" class="translatable">heder_appointmentRequest</a></li>  
+              <li><a href="#/makeDeclaration" class="translatable">heder_makeDeclaration</a></li>         
+            </ul>
+        </li>     
+        <li class="dropdown <% if (model.routes.hrm.active) { %> active<% } %>  <% if (model.routes.reintegration.active) { %> active<% } %> <% if (model.routes.prevention.active) { %> active<% } %> <% if (model.routes.wga.active) { %> active<% } %>">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="translatable">menu_dossier</span> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#/hrm" class="translatable">heder_hrm</a></li>
+              <li><a href="#/reintegration" class="translatable">heder_reintegration</a></li>
+              <li><a href="#/prevention" class="translatable">heder_prevention</a></li>             
+              <li><a href="#/wga" class="translatable">heder_wga</a></li>         
+            </ul>
+        </li> -->   
+       
+        <li class="<% if (model.routes.reports.active) { %> active <% }%> "><a href="#/reports" class="translatable">menu_report</a></li>    
+        <li><a href="#/login" ><span class="glyphicon glyphicon-log-out"></span> <span class="translatable">menu_logout</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container text-center">
+   <content-placeholder/>   
+</div>
+
+
+<footer class="container-fluid text-center">
+   <div id="version">
+    	<span style="">Powerd by Workbee 2.0.1</span>
+    </div>
+</footer>
+
+
+
+
+
+
